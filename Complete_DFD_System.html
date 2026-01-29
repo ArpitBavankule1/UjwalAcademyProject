@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Management System - Complete DFD</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 75%, #f5576c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 30px;
+            padding: 60px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 4em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h2 {
+            font-size: 2em;
+            color: #2d3748;
+            font-weight: normal;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            font-size: 1.3em;
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        .divider {
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #f5576c 100%);
+            margin: 40px auto;
+            border-radius: 2px;
+        }
+
+        .buttons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .dfd-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 25px;
+            padding: 50px 40px;
+            transition: all 0.4s ease;
+            border: 3px solid transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dfd-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(245, 87, 108, 0.1) 0%, rgba(240, 147, 251, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .dfd-card.admin::before {
+            background: linear-gradient(135deg, rgba(245, 87, 108, 0.15) 0%, rgba(240, 147, 251, 0.15) 100%);
+        }
+
+        .dfd-card.student::before {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+        }
+
+        .dfd-card:hover::before {
+            opacity: 1;
+        }
+
+        .dfd-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            border-color: #667eea;
+        }
+
+        .dfd-card.admin:hover {
+            border-color: #f5576c;
+        }
+
+        .dfd-card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .icon {
+            font-size: 5em;
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        .dfd-card h3 {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+
+        .dfd-card.admin h3 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .dfd-card.student h3 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .dfd-card p {
+            font-size: 1.2em;
+            color: #4a5568;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .view-button {
+            display: inline-block;
+            padding: 18px 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .view-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .dfd-card.admin .view-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
+        }
+
+        .dfd-card.admin .view-button:hover {
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.5);
+        }
+
+        .features-list {
+            text-align: left;
+            margin: 25px 0;
+            padding: 0 20px;
+        }
+
+        .features-list li {
+            font-size: 1.05em;
+            color: #4a5568;
+            margin: 12px 0;
+            line-height: 1.6;
+            list-style: none;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #48bb78;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .footer p {
+            font-size: 1.1em;
+            color: #718096;
+            line-height: 1.8;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #ebf8ff 0%, #bee3f8 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #4299e1;
+        }
+
+        .stat-card h4 {
+            font-size: 2.5em;
+            color: #2c5282;
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            font-size: 1.1em;
+            color: #2d3748;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 30px;
+            }
+
+            .header h1 {
+                font-size: 2.5em;
+            }
+
+            .header h2 {
+                font-size: 1.5em;
+            }
+
+            .buttons-container {
+                grid-template-columns: 1fr;
+            }
+
+            .dfd-card {
+                padding: 40px 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 UJWAL ACADEMY MANAGEMENT SYSTEM</h1>
+            <h2>Complete Data Flow Diagram (DFD)</h2>
+            <div class="divider"></div>
+            <p>Comprehensive system architecture documentation for Admin Panel and Student Portal with integrated Exam
+                Management System</p>
+        </div>
+
+        <div class="buttons-container">
+            <!-- Admin DFD Card -->
+            <div class="dfd-card admin" onclick="window.location.href='Admin_Complete_DFD_Flow.html'">
+                <div class="dfd-card-content">
+                    <span class="icon">👨‍💼</span>
+                    <h3>Admin Panel DFD</h3>
+                    <p>Complete administrative workflow and system management</p>
+
+                    <ul class="features-list">
+                        <li>Admin Login & Authentication</li>
+                        <li>Dashboard & Analytics</li>
+                        <li>Student Management</li>
+                        <li>Content Upload (Videos & Notes)</li>
+                        <li>Exam Creation & Management</li>
+                        <li>Subscription Plans</li>
+                        <li>Payment Tracking</li>
+                        <li>Result Management</li>
+                        <li>Notification System</li>
+                        <li>System Analytics</li>
+                    </ul>
+
+                    <a href="Admin_Complete_DFD_Flow.html" class="view-button">View Admin DFD →</a>
+                </div>
+            </div>
+
+            <!-- Student DFD Card -->
+            <div class="dfd-card student" onclick="window.location.href='Student_Complete_DFD_Flow.html'">
+                <div class="dfd-card-content">
+                    <span class="icon">🎓</span>
+                    <h3>Student Portal DFD</h3>
+                    <p>Complete student learning journey and activities</p>
+
+                    <ul class="features-list">
+                        <li>Student Registration</li>
+                        <li>Login & Authentication</li>
+                        <li>Student Dashboard</li>
+                        <li>Free Trial Access</li>
+                        <li>Subscription & Payment</li>
+                        <li>Learning Content Access</li>
+                        <li>Exam/Mock Test Attempt</li>
+                        <li>Auto-Evaluation System</li>
+                        <li>Notification Alerts</li>
+                        <li>Performance Analytics</li>
+                    </ul>
+
+                    <a href="Student_Complete_DFD_Flow.html" class="view-button">View Student DFD →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>📊 System Overview:</strong> This Learning Management System provides comprehensive data flow
+                diagrams for both administrative and student operations, including a complete exam management system
+                with creation, attempt, and auto-evaluation capabilities.</p>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <h4>16+</h4>
+                    <p>Database Tables</p>
+                </div>
+                <div class="stat-card">
+                    <h4>11</h4>
+                    <p>Admin Operations</p>
+                </div>
+                <div class="stat-card">
+                    <h4>9</h4>
+                    <p>Student Operations</p>
+                </div>
+                <div class="stat-card">
+                    <h4>2</h4>
+                    <p>User Roles</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
